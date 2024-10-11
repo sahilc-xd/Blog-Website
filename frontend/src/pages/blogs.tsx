@@ -1,4 +1,3 @@
-import React from 'react';
 import { Skeleton } from "../components/Skeleton";
 import { Appbar } from "../components/appbar";
 import { BlogCard } from "../components/blogCard";
