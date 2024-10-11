@@ -1,9 +1,15 @@
 import { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SignupInput } from "@sahilcodes23/medium-commons";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { Loader2 } from "lucide-react";
+
+// Define the SignupInput type if it's not imported
+interface SignupInput {
+  name: string;
+  email: string;
+  password: string;
+}
 
 // Custom Alert component
 const Alert = ({ children }: { children: React.ReactNode }) => (
