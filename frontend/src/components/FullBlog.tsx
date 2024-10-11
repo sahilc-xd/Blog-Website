@@ -1,6 +1,6 @@
 import { Blog } from "../hooks";
 import { Appbar } from "./appbar";
-import { Avataar } from "./blogCard";
+import { Avatar } from "./blogCard";
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
   return (
@@ -17,7 +17,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
             <div className="text-slate-600 text-lg mb-2">Author</div>
             <div className="flex items-center">
               <div className="pr-4">
-                <Avataar size="big" name={blog.author.name || "Anonymous"} />
+                <Avatar size="big" name={blog.author.name || "Anonymous"} />
               </div>
               <div>
                 <div className="text-xl font-bold">
