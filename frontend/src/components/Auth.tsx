@@ -19,6 +19,7 @@ const Alert = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
+   localStorage.removeItem("guest");
   const navigate = useNavigate();
   const [postInputs, setPostInputs] = useState<SignupInput>({
     name: "",
@@ -119,6 +120,15 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
             ) : null}
             {type === "signin" ? "Sign In" : "Sign Up"}
           </button>
+           <p
+          className="mt-2 text-sm text-center text-gray-500 cursor-pointer hover:text-gray-700"
+          onClick={() => {
+            localStorage.setItem("guest", "true");  // Mark user as guest
+            navigate("/blogs");
+          }}>
+          Enter as guest
+        </p>
+
         </div>
       </div>
     </div>

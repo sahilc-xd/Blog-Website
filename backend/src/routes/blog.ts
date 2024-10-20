@@ -19,6 +19,15 @@ export const blogRouter = new Hono<{
 }>();
 
 blogRouter.use("/*", async (c, next) => {
+  // Skip JWT auth for guest routes
+  const path = c.req.path;
+  console.log(path);
+  // Fix: Change startsWith("/guest") to includes("/guest")
+  if (path.includes("/guest")) {
+    await next();  // Skip JWT auth and proceed to route handler
+    return;
+  }
+
   const jwt = c.req.header("Authorization");
   try {
     if (!jwt) {
@@ -140,5 +149,31 @@ blogRouter.get("/:id", async (c) => {
   } catch (err) {
     c.status(411);
     return c.json({ message: "Error while fetching blog post" });
+  }
+});
+
+
+blogRouter.get("/guest/blogs", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env?.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const posts = await prisma.post.findMany({
+      select: {
+        content: true,
+        title: true,
+        id: true,
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+    return c.json({ posts });
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return c.json({ error: "Internal Server Error" });
   }
 });

@@ -58,3 +58,22 @@ export const useBlogs = () => {
     blogs,
   };
 };
+
+export const useGuestBlogs = () => {
+  const [loading, setLoading] = useState(true);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URL}/api/v1/blog/guest/blogs`) // No authorization headers for guests
+      .then((response) => {
+        setBlogs(response.data.posts); // Assuming response contains posts
+        setLoading(false);
+      });
+  }, []);
+
+  return {
+    loading,
+    blogs,
+  };
+};
